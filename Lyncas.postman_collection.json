@@ -1,0 +1,604 @@
+{
+	"info": {
+		"_postman_id": "e7974dd8-a26e-4776-8777-6b87b018f141",
+		"name": "Lyncas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27734258"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signin"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Inserir Conta Paga",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiaOiJhZG1pbiIsImlhdCI6MTcyNjg1MDY5OCwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJmdWxsTmFtZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3MjY4NTQyOTh9.BUDP-E30nTz6wJXQFNLtWYD97sheQAm5008nB7gMAhA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"dataVencimento\": \"2024-11-01\",\n    \"dataPagamento\": \"2024-11-01\",\n    \"valor\": 2.0,\n    \"descricao\": \"Conta de Luz 8\",\n    \"situacao\": \"PAGO\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/contas/save",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"contas",
+						"save"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Inserir Conta Paga Erro",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyNjgzNDkyMiwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJmdWxsTmFtZSI6IkFkbWluIiwiZXhwIjoxNzI2ODM4NTIyfQ.NiblaDyP7QZ3vgnUQPymC4FjvK7kgqHHqHhvgpNYsQc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"dataVencimento\": \"2024-11-01\",\n    \"valor\": 2.0,\n    \"descricao\": \"Conta de Luz 8\",\n    \"situacao\": \"PAGO\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/contas/save",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"contas",
+						"save"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Inserir Conta Pendente",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyNjg1MDY5OCwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJmdWxsTmFtZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3MjY4NTQyOTh9.BUDP-E30nTz6wJXQFNLtWYD97sheQAm5008nB7gMAhA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"dataVencimento\": \"2024-11-01\",\n    \"valor\": 300.0,\n    \"descricao\": \"Conta de Agua\",\n    \"situacao\": \"PENDENTE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/contas/save",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"contas",
+						"save"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Importar Contas",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyNjgzODczMiwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJmdWxsTmFtZSI6IkFkbWluIiwiZXhwIjoxNzI2ODQyMzMyfQ.bjRela_Dfrk91GXparnJkyBMRVjEiNurwo7B5erQdp0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/marcusandrade/dev/repo/_takehome/lyncas/contas.csv"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/contas/upload",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"contas",
+						"upload"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar Situacao Conta - Cancelado",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyNjg1MDY5OCwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJmdWxsTmFtZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3MjY4NTQyOTh9.BUDP-E30nTz6wJXQFNLtWYD97sheQAm5008nB7gMAhA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"situacao\": \"CANCELADO\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/contas/102/situacao",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"contas",
+						"102",
+						"situacao"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar Situacao Conta - Pago",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyNjg1MDY5OCwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJmdWxsTmFtZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3MjY4NTQyOTh9.BUDP-E30nTz6wJXQFNLtWYD97sheQAm5008nB7gMAhA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"dataPagamento\": \"2024-09-20\",\n    \"situacao\": \"PAGO\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/contas/154/situacao",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"contas",
+						"154",
+						"situacao"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar Conta",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyNjg1MDY5OCwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJmdWxsTmFtZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3MjY4NTQyOTh9.BUDP-E30nTz6wJXQFNLtWYD97sheQAm5008nB7gMAhA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"descricao\": \"Nova descricao\",\n    \"dataPagamento\": \"2024-09-20\",\n    \"situacao\": \"PAGO\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/contas/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"contas",
+						"3"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Contas a Pagar",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyNjg1MDE4Nywicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJmdWxsTmFtZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3MjY4NTM3ODd9.tl_Cj8kkuK8bFHb4rx2rOrcWonRo6NAS_8o5DTo-Bc8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/contas/list-pendentes?descricao=&dataVencInicio=2024-01-01&dataVencFim=2024-12-31",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"contas",
+						"list-pendentes"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"disabled": true
+						},
+						{
+							"key": "descricao",
+							"value": ""
+						},
+						{
+							"key": "dataVencInicio",
+							"value": "2024-01-01"
+						},
+						{
+							"key": "dataVencFim",
+							"value": "2024-12-31"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Total pago por período",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyNjg1MDY5OCwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJmdWxsTmFtZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3MjY4NTQyOTh9.BUDP-E30nTz6wJXQFNLtWYD97sheQAm5008nB7gMAhA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/contas/total-pago?dataVencInicio=2024-01-01&dataVencFim=2024-12-31",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"contas",
+						"total-pago"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"disabled": true
+						},
+						{
+							"key": "dataVencInicio",
+							"value": "2024-01-01"
+						},
+						{
+							"key": "dataVencFim",
+							"value": "2024-12-31"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Conta por Id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyNjg1MDY5OCwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJmdWxsTmFtZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3MjY4NTQyOTh9.BUDP-E30nTz6wJXQFNLtWYD97sheQAm5008nB7gMAhA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/contas/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"contas",
+						"1"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

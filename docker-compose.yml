@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+
+  postgres-db:
+    image: postgres:latest
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: financeiro
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    ports:
+      - "5432:5432" 
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - springboot-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d financeiro"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  financeiro-api:
+    build:
+      context: ./financeiro-api
+      dockerfile: Dockerfile
+    container_name: financeiro-api
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/financeiro
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=pass
+      - JAVA_OPTS=-Xms2g -Xmx2g
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    networks:
+      - springboot-network
+    restart: always
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  springboot-network:
+    driver: bridge
