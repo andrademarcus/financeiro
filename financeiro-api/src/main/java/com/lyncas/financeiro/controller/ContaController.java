@@ -4,6 +4,7 @@ import com.lyncas.financeiro.model.ContaDTO;
 import com.lyncas.financeiro.model.ValorTotalResponse;
 import com.lyncas.financeiro.persistence.model.Conta;
 import com.lyncas.financeiro.service.ContaService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,19 +30,19 @@ public class ContaController {
 
     @PostMapping(value = "/save")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ContaDTO save(@RequestBody Conta conta) {
+    public ContaDTO save(@RequestBody @Valid ContaDTO conta) {
         return contaService.create(conta);
     }
 
     @PatchMapping(value = "/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ContaDTO update(@PathVariable Long id, @RequestBody Conta conta) {
+    public ContaDTO update(@PathVariable Long id, @RequestBody @Valid ContaDTO conta) {
         return contaService.update(id, conta);
     }
 
     @PatchMapping(value = "/{id}/situacao")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ContaDTO updateSituacao(@PathVariable Long id, @RequestBody Conta conta) {
+    public ContaDTO updateSituacao(@PathVariable Long id, @RequestBody ContaDTO conta) {
         return contaService.updateSituacao(id, conta);
     }
 
@@ -71,6 +72,7 @@ public class ContaController {
     }
 
     @PostMapping("/upload")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> uploadCsv(@RequestParam("file") MultipartFile file, Principal principal) throws IOException {
         contaService.importFromFile(file, principal.getName());
         return ResponseEntity

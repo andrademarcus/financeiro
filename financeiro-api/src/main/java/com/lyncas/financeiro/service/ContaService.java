@@ -11,9 +11,9 @@ import java.time.LocalDate;
 
 public interface ContaService {
 
-    ContaDTO create(Conta conta);
-    ContaDTO update(Long id, Conta conta);
-    ContaDTO updateSituacao(Long id, Conta conta);
+    ContaDTO create(ContaDTO conta);
+    ContaDTO update(Long id, ContaDTO conta);
+    ContaDTO updateSituacao(Long id, ContaDTO conta);
     Page<ContaDTO> findAllPendentesByPeriodoAndDescricao(LocalDate dataVencimentoInicio,
                                                          LocalDate dataVencimentoFim,
                                                          String descricao, String sortBy, String sortOrder, int page, int size);

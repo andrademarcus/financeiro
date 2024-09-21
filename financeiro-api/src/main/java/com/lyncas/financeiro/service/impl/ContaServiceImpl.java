@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-import static com.lyncas.financeiro.mapper.ContaMapper.transform;
+import static com.lyncas.financeiro.mapper.ContaMapper.*;
 import static com.lyncas.financeiro.util.SortingHelper.createPageableWithSort;
 
 @Service
@@ -43,40 +43,42 @@ public class ContaServiceImpl implements ContaService {
     }
 
     @Override
-    public ContaDTO create(Conta conta) {
+    public ContaDTO create(ContaDTO contaDTO) {
 
-        if (conta != null && conta.getSituacao() == Situacao.PAGO && conta.getDataPagamento() == null) {
+        if (contaDTO != null && contaDTO.situacao() == Situacao.PAGO && contaDTO.dataPagamento() == null) {
             throw new RuntimeException("Informe a data de pagamento da conta");
         }
 
+        Conta conta = transformToEntity.apply(contaDTO);
         conta.setDataCadastro(LocalDateTime.now());
         conta.setUsuarioCadastro(authService.getAuthentication().getName());
-        return transform.apply(contaRepository.save(conta));
+        return transformToDTO.apply(contaRepository.save(conta));
     }
 
     @Override
-    public ContaDTO update(Long id, Conta conta) {
+    public ContaDTO update(Long id, ContaDTO contaDTO) {
 
         return contaRepository.findById(id)
                 .map(c -> {
-                    c.setDataVencimento(conta.getDataVencimento());
-                    c.setDescricao(conta.getDescricao());
-                    c.setSituacao(conta.getSituacao());
-                    c.setDataPagamento(conta.getDataPagamento());
+                    c.setDataVencimento(contaDTO.dataVencimento());
+                    c.setDescricao(contaDTO.descricao());
+                    c.setSituacao(contaDTO.situacao());
+                    c.setDataPagamento(contaDTO.dataPagamento());
                     c.setDataAtualizacao(LocalDateTime.now());
                     c.setUsuarioAtualizacao(authService.getAuthentication().getName());
-                    return transform.apply(contaRepository.save(c));
+                    return transformToDTO.apply(contaRepository.save(c));
                 })
                 .orElseThrow(() -> new RecordNotFoundException("Conta não encontrada com id: " + id));
 
     }
 
     @Override
-    public ContaDTO updateSituacao(Long id, Conta conta) {
+    public ContaDTO updateSituacao(Long id, ContaDTO contaDTO) {
 
-        if (conta == null || conta.getSituacao() == null) {
+        /// remover
+        if (contaDTO == null || contaDTO.situacao() == null) {
             throw new RuntimeException("Informe a situação da conta");
-        } else if (conta.getSituacao() == Situacao.PAGO && conta.getDataPagamento() == null) {
+        } else if (contaDTO.situacao() == Situacao.PAGO && contaDTO.dataPagamento() == null) {
             throw new RuntimeException("Informe a data de pagamento da conta");
         }
 
@@ -84,12 +86,12 @@ public class ContaServiceImpl implements ContaService {
 
         return optionalConta.map(c -> {
             // permite alteracao se for uma conta pendente
-            if (c.getSituacao() == Situacao.PENDENTE && conta.getSituacao() != Situacao.PENDENTE) {
-                c.setDataPagamento(conta.getDataPagamento());
-                c.setSituacao(conta.getSituacao());
+            if (c.getSituacao() == Situacao.PENDENTE && contaDTO.situacao() != Situacao.PENDENTE) {
+                c.setDataPagamento(contaDTO.dataPagamento());
+                c.setSituacao(contaDTO.situacao());
                 c.setDataAtualizacao(LocalDateTime.now());
                 c.setUsuarioAtualizacao(authService.getAuthentication().getName());
-                return transform.apply(contaRepository.save(c));
+                return transformToDTO.apply(contaRepository.save(c));
             }
             throw new RuntimeException("Situação da conta não pode ser alterada");
         }).orElseThrow(() -> new RecordNotFoundException("Conta não encontrada com id: " + id));
@@ -103,12 +105,12 @@ public class ContaServiceImpl implements ContaService {
         Pageable pageable = createPageableWithSort(page, size, sortBy, sortOrder);
         Page<Conta> contasPage = contaRepository.findByDataVencimentoAndDescricao(dataVencimentoInicio,
                 dataVencimentoFim, descricao, pageable);
-        return contasPage.map(transform);
+        return contasPage.map(transformToDTO);
     }
 
     @Override
     public ContaDTO getById(Long id) {
-        return transform.apply(contaRepository.findById(id)
+        return transformToDTO.apply(contaRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException("Conta não encontrada com id: " + id)));
     }
 
