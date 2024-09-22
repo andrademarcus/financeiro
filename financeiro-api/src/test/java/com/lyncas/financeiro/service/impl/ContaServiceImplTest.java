@@ -14,7 +14,9 @@ import org.springframework.security.core.Authentication;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -23,23 +25,27 @@ public class ContaServiceImplTest {
 
     ContaServiceImpl contaService;
 
-      @Mock
-      ContaRepository contaRepository;
+    @Mock
+    ContaRepository contaRepository;
 
-      @Mock
-      AuthServiceImpl authService;
+    @Mock
+    AuthServiceImpl authService;
 
+    @Mock
+    private Function<ContaDTO, Conta> transformToEntity;
+
+    @Mock
+    private Function<Conta, ContaDTO> transformToDTO;
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.openMocks(this);;
+        MockitoAnnotations.openMocks(this);
         contaService = new ContaServiceImpl(contaRepository, authService);
     }
 
     @Test
     void createThrowsExceptionWhenContaIsPagoAndDataPagamentoIsNull() {
-        Conta conta = new Conta();
-        conta.setSituacao(Situacao.PAGO);
+        ContaDTO conta = getContaDTO(Situacao.PAGO);
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> contaService.create(conta));
 
@@ -48,24 +54,36 @@ public class ContaServiceImplTest {
 
     @Test
     void createSavesContaWithValidData() {
-        Conta conta = new Conta();
-        conta.setSituacao(Situacao.PENDENTE);
-        Conta savedConta = new Conta();
-        when(contaRepository.save(conta)).thenReturn(savedConta);
+        ContaDTO contaDTO = getContaDTO(Situacao.PENDENTE);
 
         Authentication authentication = mock(Authentication.class);
-        when(authentication.getName()).thenReturn("testUser");
         when(authService.getAuthentication()).thenReturn(authentication);
+        when(authentication.getName()).thenReturn("testUser");
 
-        ContaDTO response = contaService.create(conta);
+        Conta conta = new Conta();
+        conta.setDataCadastro(LocalDateTime.now());
+        conta.setUsuarioCadastro("testUser");
 
-        assertNotNull(response);
-        verify(contaRepository, times(1)).save(conta);
+        when(contaRepository.save(any(Conta.class))).thenReturn(conta);
+
+        ContaDTO result = contaService.create(contaDTO);
+
+        assertNotNull(result);
+        assertEquals("testUser", result.usuarioCadastro());
+        verify(contaRepository, times(1)).save(any(Conta.class));
     }
+
+
+    private ContaDTO getContaDTO(Situacao situacao) {
+        return new ContaDTO(null, null, null, BigDecimal.ZERO, "", situacao,
+                "", "", LocalDateTime.now(), LocalDateTime.now());
+    }
+
 
     @Test
     void updateContaWithValidData() {
         Long id = 1L;
+        ContaDTO contaDTO = new ContaDTO();
         Conta conta = new Conta();
         Conta savedConta = new Conta();
         when(contaRepository.findById(id)).thenReturn(Optional.of(conta));
@@ -75,7 +93,7 @@ public class ContaServiceImplTest {
         when(authentication.getName()).thenReturn("testUser");
         when(authService.getAuthentication()).thenReturn(authentication);
 
-        ContaDTO response = contaService.update(id, conta);
+        ContaDTO response = contaService.update(id, contaDTO);
 
         assertNotNull(response);
         verify(contaRepository, times(1)).save(conta);
@@ -94,7 +112,7 @@ public class ContaServiceImplTest {
     @Test
     void updateSituacaoThrowsExceptionWhenSituacaoIsNull() {
         Long id = 1L;
-        Conta conta = new Conta();
+        ContaDTO conta = new ContaDTO();
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> contaService.updateSituacao(id, conta));
 
@@ -104,8 +122,8 @@ public class ContaServiceImplTest {
     @Test
     void updateSituacaoThrowsExceptionWhenContaIsPagoAndDataPagamentoIsNull() {
         Long id = 1L;
-        Conta conta = new Conta();
-        conta.setSituacao(Situacao.PAGO);
+        ContaDTO conta = new ContaDTO(null, null, null, BigDecimal.ZERO, "", Situacao.PAGO,
+                "", "", LocalDateTime.now(), LocalDateTime.now());
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> contaService.updateSituacao(id, conta));
 
@@ -115,9 +133,8 @@ public class ContaServiceImplTest {
     @Test
     void updateSituacaoUpdatesContaWhenValid() {
         Long id = 1L;
-        Conta conta = new Conta();
-        conta.setSituacao(Situacao.PAGO);
-        conta.setDataPagamento(LocalDate.now());
+        ContaDTO conta = new ContaDTO(null, null, LocalDate.now(), BigDecimal.ZERO, "", Situacao.PAGO,
+                "", "", LocalDateTime.now(), LocalDateTime.now());
         Conta existingConta = new Conta();
         existingConta.setSituacao(Situacao.PENDENTE);
         when(contaRepository.findById(id)).thenReturn(Optional.of(existingConta));
@@ -137,9 +154,8 @@ public class ContaServiceImplTest {
     @Test
     void updateSituacaoThrowsExceptionWhenSituacaoCannotBeChanged() {
         Long id = 1L;
-        Conta conta = new Conta();
-        conta.setSituacao(Situacao.PAGO);
-        conta.setDataPagamento(LocalDate.now());
+        ContaDTO conta = new ContaDTO(null, null, LocalDate.now(), BigDecimal.ZERO, "", Situacao.PAGO,
+                "", "", LocalDateTime.now(), LocalDateTime.now());
         Conta existingConta = new Conta();
         existingConta.setSituacao(Situacao.PAGO);
         when(contaRepository.findById(id)).thenReturn(Optional.of(existingConta));

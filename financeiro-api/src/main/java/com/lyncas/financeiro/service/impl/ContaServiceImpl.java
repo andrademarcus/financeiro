@@ -75,7 +75,6 @@ public class ContaServiceImpl implements ContaService {
     @Override
     public ContaDTO updateSituacao(Long id, ContaDTO contaDTO) {
 
-        /// remover
         if (contaDTO == null || contaDTO.situacao() == null) {
             throw new RuntimeException("Informe a situação da conta");
         } else if (contaDTO.situacao() == Situacao.PAGO && contaDTO.dataPagamento() == null) {

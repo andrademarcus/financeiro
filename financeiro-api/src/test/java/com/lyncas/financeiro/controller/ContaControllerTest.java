@@ -38,7 +38,7 @@ public class ContaControllerTest {
 
     @Test
     void saveReturnsContaResponseOnValidConta() {
-        Conta conta = new Conta();
+        ContaDTO conta = new ContaDTO();
         ContaDTO expectedResponse = new ContaDTO();
         when(contaService.create(conta)).thenReturn(expectedResponse);
 
@@ -49,7 +49,7 @@ public class ContaControllerTest {
 
     @Test
     void updateReturnsContaResponseOnValidConta() {
-        Conta conta = new Conta();
+        ContaDTO conta = new ContaDTO();
         ContaDTO expectedResponse = new ContaDTO();
         when(contaService.update(1L, conta)).thenReturn(expectedResponse);
 
@@ -61,7 +61,7 @@ public class ContaControllerTest {
     @Test
     void updateSituacaoReturnsContaResponseOnValidIdAndConta() {
         Long id = 1L;
-        Conta conta = new Conta();
+        ContaDTO conta = new ContaDTO();
         ContaDTO expectedResponse = new ContaDTO();
         when(contaService.updateSituacao(id, conta)).thenReturn(expectedResponse);
 
