@@ -42,9 +42,9 @@ public class ContaControllerTest {
         ContaDTO expectedResponse = new ContaDTO();
         when(contaService.create(conta)).thenReturn(expectedResponse);
 
-        ContaDTO response = contaController.save(conta);
+        ResponseEntity<ContaDTO> response = contaController.save(conta);
 
-        assertEquals(expectedResponse, response);
+        assertEquals(expectedResponse, response.getBody());
     }
 
     @Test
@@ -53,9 +53,9 @@ public class ContaControllerTest {
         ContaDTO expectedResponse = new ContaDTO();
         when(contaService.update(1L, conta)).thenReturn(expectedResponse);
 
-        ContaDTO response = contaController.update(1L, conta);
+        ResponseEntity<ContaDTO> response = contaController.update(1L, conta);
 
-        assertEquals(expectedResponse, response);
+        assertEquals(expectedResponse, response.getBody());
     }
 
     @Test
@@ -65,9 +65,9 @@ public class ContaControllerTest {
         ContaDTO expectedResponse = new ContaDTO();
         when(contaService.updateSituacao(id, conta)).thenReturn(expectedResponse);
 
-        ContaDTO response = contaController.updateSituacao(id, conta);
+        ResponseEntity<ContaDTO> response = contaController.updateSituacao(id, conta);
 
-        assertEquals(expectedResponse, response);
+        assertEquals(expectedResponse, response.getBody());
     }
 
     @Test

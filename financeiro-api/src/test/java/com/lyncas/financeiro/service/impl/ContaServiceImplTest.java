@@ -31,12 +31,6 @@ public class ContaServiceImplTest {
     @Mock
     AuthServiceImpl authService;
 
-    @Mock
-    private Function<ContaDTO, Conta> transformToEntity;
-
-    @Mock
-    private Function<Conta, ContaDTO> transformToDTO;
-
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
